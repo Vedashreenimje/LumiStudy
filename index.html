@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LumiStudy | AI-Powered Study Planner</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+</head>
+<body class="font-body min-h-screen overflow-x-hidden">
+    <!-- Background Elements -->
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <div class="absolute top-10 left-10 w-72 h-72 bg-lavender rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float-slow"></div>
+        <div class="absolute bottom-10 right-10 w-72 h-72 bg-peach rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-float-medium"></div>
+        <div class="absolute top-1/2 left-1/3 w-64 h-64 bg-mint rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-float-fast"></div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="app" class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8">
+        <!-- Home Page (Default View) -->
+        <section id="home-page" class="max-w-4xl w-full text-center fade-in">
+            <div class="glass-card p-8 md:p-12 rounded-3xl">
+                <h1 class="font-display text-5xl md:text-7xl font-bold text-gray-800 mb-4">
+                    Lumi<span class="text-accent">Study</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-8 font-medium">
+                    Study smarter, not harder — tailored to your mood.
+                </p>
+                <p class="text-gray-500 mb-10 text-lg max-w-2xl mx-auto">
+                    An AI-powered study planner that understands your mood, your energy, and your goals.
+                    Get a personalized Pomodoro plan that adapts to how you're feeling right now.
+                </p>
+                <button id="begin-btn" class="cta-button">
+                    <i class="fas fa-sparkles mr-2"></i> Begin My Study Journey
+                </button>
+            </div>
+            
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                <div class="feature-card">
+                    <div class="text-3xl mb-2">🎯</div>
+                    <h3 class="font-semibold">Personalized Plans</h3>
+                </div>
+                <div class="feature-card">
+                    <div class="text-3xl mb-2">😊</div>
+                    <h3 class="font-semibold">Mood-Based</h3>
+                </div>
+                <div class="feature-card">
+                    <div class="text-3xl mb-2">⏱️</div>
+                    <h3 class="font-semibold">Smart Timer</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Name Input Page -->
+        <section id="name-page" class="max-w-lg w-full hidden fade-in">
+            <div class="glass-card p-8 rounded-3xl">
+                <div class="text-center mb-8">
+                    <div class="text-4xl mb-4">👋</div>
+                    <h2 class="font-display text-3xl font-bold text-gray-800 mb-2">Let's Get Personal</h2>
+                    <p class="text-gray-500">What should we call you?</p>
+                </div>
+                <div class="mb-6">
+                    <input type="text" id="user-name" class="input-field" placeholder="Enter your name" autocomplete="off">
+                </div>
+                <button id="name-continue-btn" class="primary-btn w-full">
+                    Continue <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Study Diagnosis Page -->
+        <section id="study-page" class="max-w-2xl w-full hidden fade-in">
+            <div class="glass-card p-8 rounded-3xl">
+                <h2 class="font-display text-3xl font-bold text-gray-800 mb-2">Study Diagnosis</h2>
+                <p class="text-gray-500 mb-6">Let's understand what you're working on</p>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-gray-700 mb-2">What are you studying?</label>
+                        <input type="text" id="study-subject" class="input-field" placeholder="e.g., Mathematics, Computer Science, History...">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-3">How would you like to approach this?</label>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <button class="option-card syllabus-option active" data-type="syllabus">
+                                <div class="text-2xl mb-2">📄</div>
+                                <span>Follow a syllabus</span>
+                            </button>
+                            <button class="option-card topic-option" data-type="topic">
+                                <div class="text-2xl mb-2">🎯</div>
+                                <span>Focus on a topic</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Syllabus Input -->
+                        <div id="syllabus-input" class="mt-4">
+                            <textarea id="syllabus-content" class="input-field h-32" placeholder="Paste your syllabus topics here (one per line or comma-separated)&#10;Example:&#10;Chapter 1: Algebra Basics&#10;Chapter 2: Quadratic Equations&#10;Chapter 3: Functions"></textarea>
+                        </div>
+                        
+                        <!-- Topic Input -->
+                        <div id="topic-input" class="mt-4 hidden">
+                            <input type="text" id="focus-topic" class="input-field" placeholder="Enter specific topic to focus on&#10;Example: 'Photosynthesis', 'World War II', 'Python Functions'">
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4 border-t border-gray-100">
+                        <label class="block text-gray-700 mb-3">Preferred study time block</label>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-1">
+                                <label class="text-sm text-gray-500">Start Time</label>
+                                <input type="time" id="start-time" class="input-field" value="13:00">
+                            </div>
+                            <div class="flex-1">
+                                <label class="text-sm text-gray-500">End Time</label>
+                                <input type="time" id="end-time" class="input-field" value="16:00">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button id="study-continue-btn" class="primary-btn w-full mt-8">
+                    Continue to Mood Check <i class="fas fa-smile ml-2"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Mood Selection Page -->
+        <section id="mood-page" class="max-w-3xl w-full hidden fade-in">
+            <div class="glass-card p-8 rounded-3xl">
+                <div class="text-center mb-8">
+                    <h2 class="font-display text-3xl font-bold text-gray-800 mb-2">How are you feeling?</h2>
+                    <p class="text-gray-500">Your mood will shape your study plan</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                    <div class="mood-card" data-mood="tired">
+                        <div class="text-4xl mb-2">😴</div>
+                        <h3 class="font-medium">Tired</h3>
+                        <p class="text-sm text-gray-500">Need gentle pacing</p>
+                    </div>
+                    <div class="mood-card" data-mood="neutral">
+                        <div class="text-4xl mb-2">😐</div>
+                        <h3 class="font-medium">Neutral</h3>
+                        <p class="text-sm text-gray-500">Balanced approach</p>
+                    </div>
+                    <div class="mood-card" data-mood="focused">
+                        <div class="text-4xl mb-2">🙂</div>
+                        <h3 class="font-medium">Focused</h3>
+                        <p class="text-sm text-gray-500">Ready to dive in</p>
+                    </div>
+                    <div class="mood-card" data-mood="motivated">
+                        <div class="text-4xl mb-2">🔥</div>
+                        <h3 class="font-medium">Motivated</h3>
+                        <p class="text-sm text-gray-500">High energy mode</p>
+                    </div>
+                    <div class="mood-card" data-mood="overwhelmed">
+                        <div class="text-4xl mb-2">😣</div>
+                        <h3 class="font-medium">Overwhelmed</h3>
+                        <p class="text-sm text-gray-500">Break it down</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-between items-center pt-6 border-t border-gray-100">
+                    <button id="back-to-study-btn" class="secondary-btn">
+                        <i class="fas fa-arrow-left mr-2"></i> Back
+                    </button>
+                    <button id="generate-plan-btn" class="primary-btn">
+                        Generate My AI Plan <i class="fas fa-magic ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Planner Page -->
+        <section id="planner-page" class="max-w-3xl w-full hidden fade-in">
+            <div class="glass-card p-8 rounded-3xl">
+                <div id="ai-plan-content">
+                    <!-- AI-generated content will appear here -->
+                </div>
+                
+                <div class="mt-8 pt-6 border-t border-gray-100">
+                    <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <button id="back-to-mood-btn" class="secondary-btn">
+                            <i class="fas fa-redo mr-2"></i> Adjust Mood
+                        </button>
+                        <button id="start-session-btn" class="cta-button">
+                            <i class="fas fa-play-circle mr-2"></i> Start Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pomodoro Timer Page -->
+        <section id="timer-page" class="max-w-3xl w-full hidden fade-in">
+            <div class="glass-card p-8 rounded-3xl">
+                <div class="text-center mb-6">
+                    <h2 id="session-title" class="font-display text-3xl font-bold text-gray-800 mb-2">Study Session</h2>
+                    <p id="session-subtitle" class="text-gray-500">Session in progress</p>
+                </div>
+                
+                <!-- Timer Display -->
+                <div class="relative w-64 h-64 mx-auto my-8">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div id="timer-display" class="text-5xl font-bold text-gray-800">25:00</div>
+                    </div>
+                    <svg class="transform -rotate-90 w-64 h-64" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="#F4F4F4" stroke-width="8"></circle>
+                        <circle id="progress-ring" cx="50" cy="50" r="45" fill="none" stroke="#8A7FFF" stroke-width="8" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="0"></circle>
+                    </svg>
+                </div>
+                
+                <!-- Session Info -->
+                <div class="text-center mb-8">
+                    <div id="session-type" class="inline-block px-4 py-2 rounded-full bg-lavender text-gray-700 font-medium">
+                        Focus Time
+                    </div>
+                    <p id="session-message" class="mt-4 text-gray-600 italic">One step at a time. You're doing great!</p>
+                    
+                    <div class="mt-6 grid grid-cols-3 gap-4 max-w-md mx-auto">
+                        <div class="stat-card">
+                            <div class="text-lg font-semibold" id="completed-sessions">0</div>
+                            <div class="text-sm text-gray-500">Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="text-lg font-semibold" id="total-sessions">4</div>
+                            <div class="text-sm text-gray-500">Total</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="text-lg font-semibold" id="time-remaining">3:00:00</div>
+                            <div class="text-sm text-gray-500">Remaining</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timer Controls -->
+                <div class="flex justify-center gap-4">
+                    <button id="pause-btn" class="secondary-btn">
+                        <i class="fas fa-pause mr-2"></i> Pause
+                    </button>
+                    <button id="end-session-btn" class="primary-btn bg-rose-100 text-rose-600 hover:bg-rose-200">
+                        <i class="fas fa-stop-circle mr-2"></i> End Session Early
+                    </button>
+                </div>
+                
+                <!-- Session Progress -->
+                <div class="mt-8 pt-6 border-t border-gray-100">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-gray-700">Session Progress</span>
+                        <span id="progress-text" class="text-gray-500">1/4 Sessions</span>
+                    </div>
+                    <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="h-full bg-accent rounded-full" style="width: 25%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reflection Page -->
+        <section id="reflection-page" class="max-w-2xl w-full hidden fade-in">
+            <div class="glass-card p-8 rounded-3xl">
+                <div class="text-center">
+                    <div class="confetti">🎉</div>
+                    <h2 class="font-display text-3xl font-bold text-gray-800 mb-4">Session Complete!</h2>
+                </div>
+                
+                <div id="reflection-content" class="my-8 p-6 bg-gradient-to-r from-lavender/30 to-peach/30 rounded-2xl">
+                    <!-- AI-generated reflection will appear here -->
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button id="save-progress-btn" class="secondary-btn">
+                        <i class="fas fa-save mr-2"></i> Save Progress
+                    </button>
+                    <button id="new-session-btn" class="primary-btn">
+                        <i class="fas fa-plus-circle mr-2"></i> Start New Session
+                    </button>
+                </div>
+                
+                <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+                    <p class="text-gray-500">See you next time! Remember: consistency > perfection.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Page Indicator -->
+        <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2">
+            <div class="flex space-x-2 bg-white/70 backdrop-blur-sm rounded-full p-2 shadow-sm">
+                <div id="page-dot-1" class="page-dot active"></div>
+                <div id="page-dot-2" class="page-dot"></div>
+                <div id="page-dot-3" class="page-dot"></div>
+                <div id="page-dot-4" class="page-dot"></div>
+                <div id="page-dot-5" class="page-dot"></div>
+                <div id="page-dot-6" class="page-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-6 right-6 bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-lg border border-gray-100 transform translate-x-full transition-transform duration-300 hidden max-w-xs">
+        <div class="flex items-start">
+            <div id="toast-icon" class="text-xl mr-3"></div>
+            <div>
+                <p id="toast-message" class="text-gray-700"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

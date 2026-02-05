@@ -1,0 +1,257 @@
+/* Custom CSS for LumiStudy */
+:root {
+    --lavender: #E6D9FF;
+    --peach: #FFD6C9;
+    --mint: #CFFAE1;
+    --soft-gray: #F4F4F4;
+    --text-dark: #333333;
+    --accent: #8A7FFF;
+}
+
+/* Font Classes */
+.font-display {
+    font-family: 'Playfair Display', serif;
+}
+
+.font-body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Custom Tailwind Classes */
+.bg-lavender { background-color: var(--lavender); }
+.bg-peach { background-color: var(--peach); }
+.bg-mint { background-color: var(--mint); }
+.bg-soft-gray { background-color: var(--soft-gray); }
+.text-accent { color: var(--accent); }
+.bg-accent { background-color: var(--accent); }
+.border-accent { border-color: var(--accent); }
+
+/* Glassmorphism Effect */
+.glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05);
+}
+
+/* Animations */
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-20px) translateX(10px); }
+}
+
+@keyframes float-medium {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-15px) translateX(-15px); }
+}
+
+@keyframes float-fast {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-10px) translateX(5px); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(138, 127, 255, 0.3); }
+    50% { box-shadow: 0 0 40px rgba(138, 127, 255, 0.6); }
+}
+
+@keyframes confetti-fall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(500px) rotate(360deg); opacity: 0; }
+}
+
+/* Animation Classes */
+.animate-float-slow { animation: float-slow 25s ease-in-out infinite; }
+.animate-float-medium { animation: float-medium 20s ease-in-out infinite; }
+.animate-float-fast { animation: float-fast 15s ease-in-out infinite; }
+.fade-in { animation: fadeIn 0.6s ease-out forwards; }
+.pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* UI Components */
+.cta-button {
+    background: linear-gradient(135deg, var(--accent), #A594FF);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.125rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(138, 127, 255, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(138, 127, 255, 0.4);
+}
+
+.primary-btn {
+    background-color: var(--accent);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.primary-btn:hover {
+    background-color: #7668FF;
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    background-color: var(--soft-gray);
+    color: var(--text-dark);
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.secondary-btn:hover {
+    background-color: #E8E8E8;
+    transform: translateY(-2px);
+}
+
+.input-field {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 2px solid #E8E8E8;
+    background-color: white;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(138, 127, 255, 0.1);
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.9);
+    border-color: var(--lavender);
+}
+
+.option-card {
+    background: white;
+    border: 2px solid #E8E8E8;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.option-card.active {
+    border-color: var(--accent);
+    background-color: rgba(138, 127, 255, 0.05);
+}
+
+.option-card:hover:not(.active) {
+    border-color: var(--lavender);
+    transform: translateY(-3px);
+}
+
+.mood-card {
+    background: white;
+    border: 2px solid #E8E8E8;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.mood-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--lavender);
+}
+
+.mood-card.selected {
+    border-color: var(--accent);
+    background-color: rgba(138, 127, 255, 0.05);
+    animation: pulse-glow 2s infinite;
+}
+
+.page-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #D1D1D1;
+    transition: all 0.3s ease;
+}
+
+.page-dot.active {
+    width: 24px;
+    background-color: var(--accent);
+    border-radius: 4px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.confetti {
+    font-size: 4rem;
+    animation: confetti-fall 2s ease-out forwards;
+    display: inline-block;
+}
+
+/* Timer Animation */
+#progress-ring {
+    transition: stroke-dashoffset 1s linear;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+    .glass-card {
+        padding: 24px !important;
+    }
+    
+    .cta-button, .primary-btn, .secondary-btn {
+        padding: 14px 20px;
+        width: 100%;
+    }
+    
+    .mood-card {
+        padding: 16px 12px;
+    }
+}
